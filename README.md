@@ -24,8 +24,7 @@ What the DSL *does* provide is the ablity to formulate queries thusly:
 ```scala
   // Using an Untyped.criteria
   {
-  import reactivemongo.extensions.dsl.criteria._
-  import Untyped._
+  import com.github.osxhacker.query.mongodb.untyped.criteria._
 
   // The MongoDB properties referenced are not enforced by the compiler
   // to belong to any particular type.  This is what is meant by "Untyped".
@@ -39,8 +38,7 @@ Another form which achieves the same result is to use one of the `where` methods
 ```scala
   // Using one of the Untyped.where overloads
   {
-  import reactivemongo.extensions.dsl.criteria._
-  import Untyped._
+  import com.github.osxhacker.query.reactive.untyped.criteria._
 
   val cursor = collection.find(
     where (_.firstName === "Jack" && _.age >= 18)
@@ -52,38 +50,40 @@ There are overloads for between 1 and 22 place holders using the `where` method.
 
 #### Typed DSL Support
 
-For situations where the MongoDB document structure is well known and a developer wishes enforce property existence **during compilation**, the `Typed` Criteria can be used:
+For situations where the MongoDB document structure is well known and a developer wishes enforce property existence **during compilation**, the `typed` Criteria can be used:
 
 ```scala
   {
-  // Using a Typed criteria which restricts properties to those
+  // Using a typed criteria which restricts properties to those
   // within a given type and/or those directly accessible
   // through property selectors.
-  import reactivemongo.extensions.dsl.criteria._
-  import Typed._
+  import com.github.osxhacker.query.reactive.typed.criteria._
 
   case class Nested (rating : Double)
   case class ExampleDocument (aProperty : String, another : Int, nested : Nested)
 
-  val byKnownProperties = criteria[ExampleDocument] (_.aProperty) =~ "^[A-Z]\\w+" && (
-    criteria[ExampleDocument] (_.another) > 0 ||
-    criteria[ExampleDocument] (_.nested.rating) < 10.0
-	);
+  val byKnownProperties = where[ExampleDocument] {
+    doc =>
+      doc (_.aProperty) =~ "^[A-Z]\\w+" && (
+        doc (_.another) > 0 ||
+        doc (_.nested.rating) < 10.0
+	    )
+	  }
 
   val cursor = collection.find(byKnownProperties).cursor[BSONDocument];
   }
 ```
 
-When the `Typed` version is employed, compilation will fail if the provided property navigation does not exist from the *root type* (specified as the type parameter to `criteria` above) **or** the leaf type is not type-compatible with the value(s) provided (if any).
+When the `typed` version is employed, compilation will fail if the provided property navigation does not exist from the *root type* (specified as the type parameter to `criteria` above) **or** the leaf type is not type-compatible with the value(s) provided (if any).
 
-An easy way to think of this is that if it doesn't compile in "regular usage", then it definitely will not when used in a `Typed.criteria`.
+An easy way to think of this is that if it doesn't compile in "regular usage", then it definitely will not when used in a `typed.criteria`.
 
 
 ### Usage Considerations
 
-Note that `Typed` and `Untyped` serve different needs.  When the structure of a document collection is both known *and* identified as static, `Typed` makes sense to employ.  However, `Untyped` is compelling when document structure can vary within a collection.  These are considerations which can easily vary between projects and even within different modules of one project.
+Note that `typed` and `untyped` serve different needs.  When the structure of a document collection is both known *and* identified as static, `typed` makes sense to employ.  However, `untyped` is compelling when document structure can vary within a collection.  These are considerations which can easily vary between projects and even within different modules of one project.
 
-Feel free to use either or both `Typed` and `Untyped` as they make sense for the problem at hand.  One thing to keep in mind is that the examples shown above assumes only one is in scope.
+Feel free to use either or both `typed` and `untyped` as they make sense for the problem at hand.  One thing to keep in mind is that the examples shown above assumes only one is in scope.
 
 
 ### Roadmap
@@ -102,7 +102,7 @@ When using the Criteria DSL, the fact that the operators adhere to the expectati
 For the purposes of the operator API reference, assume the following code is in scope:
 
 ```scala
-import reactivemongo.extensions.dsl.criteria.Untyped._
+import reactivemongo.extensions.dsl.criteria.untyped.criteria._
 ```
 
 ### Comparison Operators
