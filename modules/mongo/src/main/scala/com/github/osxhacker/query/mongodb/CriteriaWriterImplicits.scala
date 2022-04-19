@@ -136,10 +136,7 @@ trait CriteriaWriterImplicits
             override def write (tree : EqualTo[BsonDocument, A, B]) : BsonDocument =
                 BsonDocument (
                     tree.field._property$path ->
-                    BsonDocument (
-                        tree.operand.name ->
-                        valueWriter.write (tree.value.instance)
-                        )
+                    valueWriter.write (tree.value.instance)
                     )
         }
     }
@@ -356,11 +353,14 @@ trait CriteriaWriterImplicits
             : BsonDocument =
                 BsonDocument (
                     tree.field._property$path ->
-                    tree.modifier
-                        .map (_.value)
-                        .fold (BsonRegularExpression (tree.value.instance)) (
-                            BsonRegularExpression (tree.value.instance, _)
+                    BsonDocument (
+                        tree.operand.name ->
+                        tree.modifier
+                            .map (_.value)
+                            .fold (BsonRegularExpression (tree.value.instance)) (
+                                BsonRegularExpression (tree.value.instance, _)
                             )
+                    )
                 )
         }
     }

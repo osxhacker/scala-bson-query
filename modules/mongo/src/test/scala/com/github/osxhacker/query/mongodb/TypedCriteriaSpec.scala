@@ -5,7 +5,11 @@ import com.github.osxhacker.query.criteria.expression.{
     IgnoreCase
     }
 
-import org.bson.json.JsonWriterSettings
+import org.bson.json.{
+    JsonMode,
+    JsonWriterSettings
+    }
+
 import org.mongodb.scala.bson.BsonDocument
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
@@ -34,6 +38,7 @@ final class TypedCriteriaSpec ()
 
     /// Instance Properties
     private val settings = JsonWriterSettings.builder ()
+        .outputMode (JsonMode.RELAXED)
         .indent (true)
         .build ()
 
@@ -53,14 +58,10 @@ final class TypedCriteriaSpec ()
                   |    {
                   |      "$and": [
                   |        {
-                  |          "count": {
-                  |            "$eq": 1
-                  |          }
+                  |          "count": 1
                   |        },
                   |        {
-                  |          "text": {
-                  |            "$eq": "foo"
-                  |          }
+                  |          "text": "foo"
                   |        }
                   |      ]
                   |    },
@@ -74,9 +75,11 @@ final class TypedCriteriaSpec ()
                   |    },
                   |    {
                   |      "text": {
-                  |        "$regularExpression": {
-                  |          "pattern": "^\\w{3}\\s*\\d$",
-                  |          "options": "i"
+                  |        "$regex": {
+                  |          "$regularExpression": {
+                  |            "pattern": "^\\w{3}\\s*\\d$",
+                  |            "options": "i"
+                  |          }
                   |        }
                   |      }
                   |    }
