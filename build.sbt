@@ -48,7 +48,10 @@ lazy val core = module ("core")
 
 /// This is a work-in-progress, so is not part of the build yet.
 lazy val docs = (project in file ("docs"))
-	.enablePlugins (SbtPlugin, ParadoxSitePlugin /*, GhpagesPlugin */)
+	.settings (
+		paradoxProperties += ("version" -> version.value)
+		)
+	.enablePlugins (ParadoxSitePlugin /*, GhpagesPlugin */)
 
 lazy val mongo = module ("mongo")
 	.settings (

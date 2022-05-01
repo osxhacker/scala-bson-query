@@ -16,7 +16,7 @@ Until `v1.0.0`, the documentation found here should be considered as being in a 
 The `reactivemongo.api.collections.GenericCollection` type provides the `find` method used to find documents matching a criteria.  It is this interaction which the DSL targets.  Originally, providing a selector to `find` had an interaction similar to:
 
 ```scala
-  val cursor = collection.find(BSONDocument("firstName" -> "Jack")).cursor[BSONDocument]
+  val cursor = collection.find (BSONDocument ("firstName" -> "Jack")).cursor[BSONDocument]
 ```
 
 This is, of course, still supported as the DSL does not preclude this usage.
@@ -28,27 +28,27 @@ This is, of course, still supported as the DSL does not preclude this usage.
 What the DSL *does* provide is the ablity to formulate queries thusly:
 
 ```scala
-  // Using an Untyped.criteria
+  // Using an untyped.criteria
   {
   import com.github.osxhacker.query.mongodb.untyped.criteria._
 
   // The MongoDB properties referenced are not enforced by the compiler
   // to belong to any particular type.  This is what is meant by "Untyped".
-  val adhoc = criteria.firstName === "Jack" && criteria.age >= 18;
-  val cursor = collection.find(adhoc).cursor[BSONDocument];
+  val adhoc = criteria.firstName === "Jack" && criteria.age >= 18
+  val cursor = collection.find (adhoc).cursor[BSONDocument]
   }
 ```
 
 Another form which achieves the same result is to use one of the `where` methods available:
 
 ```scala
-  // Using one of the Untyped.where overloads
+  // Using one of the untyped.where overloads
   {
   import com.github.osxhacker.query.reactive.untyped.criteria._
 
-  val cursor = collection.find(
+  val cursor = collection.find (
     where (_.firstName === "Jack" && _.age >= 18)
-	).cursor[BSONDocument];
+    ).cursor[BSONDocument]
   }
 ```
 
@@ -73,10 +73,10 @@ For situations where the MongoDB document structure is well known and a develope
       doc (_.aProperty) =~ "^[A-Z]\\w+" && (
         doc (_.another) > 0 ||
         doc (_.nested.rating) < 10.0
-	    )
-	  }
+        )
+      }
 
-  val cursor = collection.find(byKnownProperties).cursor[BSONDocument];
+  val cursor = collection.find (byKnownProperties).cursor[BSONDocument]
   }
 ```
 
@@ -175,8 +175,8 @@ criteria.aString.between[HalfOpen] ("A", "B")
 * **exists** Matches any document which has the specified field.  Use the unary not operator to match based on the leaf property being absent entirely.
 
 ```scala
-criteria.aProperty.exists	// Requires 'aProperty' to be in the document
-!criteria.aProperty.exists	// Only matches documents without 'aProperty'
+criteria.aProperty.exists   // Requires 'aProperty' to be in the document
+!criteria.aProperty.exists  // Only matches documents without 'aProperty'
 ```
 
 * **in** Matches properties which equal one of the given values or array properties having one element which equals any of the given values.  Combine with the unary not operator to specify "not in."

@@ -2,7 +2,7 @@
 
 Defines a DSL for creating [MongoDB](http://mongodb.github.io/mongo-java-driver/) and [ReactiveMongo](https://github.com/ReactiveMongo/ReactiveMongo) criteria for queries.
 
-## Overview
+### Overview
 
 The original version of this library only supported the ReactiveMongo driver.  This project supports that and the official MongoDB Scala/Java driver as well.
 
@@ -10,7 +10,7 @@ There may be additional `modules` introduced, such as support for [Circe](https:
 
 Until `v1.0.0`, the documentation found here should be considered as being in a state of transition.
 
-### Original Query Syntax
+## Original Query Syntax
 
 The `reactivemongo.api.collections.GenericCollection` type provides the `find` method used to find documents matching a criteria.  It is this interaction which the DSL targets.  Originally, providing a selector to `find` had an interaction similar to:
 
@@ -20,9 +20,9 @@ The `reactivemongo.api.collections.GenericCollection` type provides the `find` m
 
 This is, of course, still supported as the DSL does not preclude this usage.
 
-### Criteria DSL
+## DSL
 
-#### Untyped DSL Support
+### Untyped DSL Support
 
 What the DSL *does* provide is the ablity to formulate queries thusly:
 
@@ -53,7 +53,7 @@ Another form which achieves the same result is to use one of the `where` methods
 
 There are overloads for between 1 and 22 place holders using the `where` method.  Should more than 22 be needed, then the 1 argument version should be used with a named parameter.  This allows an infinite number of property constraints to be specified.
 
-#### Typed DSL Support
+### Typed DSL Support
 
 For situations where the MongoDB document structure is well known and a developer wishes enforce property existence **during compilation**, the `typed` Criteria can be used:
 
@@ -91,7 +91,7 @@ Note that `typed` and `untyped` serve different needs.  When the structure of a 
 Feel free to use either or both `typed` and `untyped` as they make sense for the problem at hand.  One thing to keep in mind is that the examples shown above assumes only one is in scope.
 
 
-### Operators
+## Operators
 
 When using the Criteria DSL, the fact that the operators adhere to the expectations of both programmers and Scala precedences, most uses will "just work."  For example, explicitly defining grouping is done with parentheses, just as you would do with any other bit of Scala code.
 
