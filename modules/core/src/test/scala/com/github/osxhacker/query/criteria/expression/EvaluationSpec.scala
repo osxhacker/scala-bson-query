@@ -1,5 +1,6 @@
 package com.github.osxhacker.query.criteria.expression
 
+import com.github.osxhacker.query.ProjectSpec
 import com.github.osxhacker.query.criteria._
 
 

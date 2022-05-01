@@ -18,7 +18,7 @@ import org.scalatest.matchers.should.Matchers
 /**
  * The '''TypedCriteriaSpec''' type defines the unit-tests which certify the
  * [[com.github.osxhacker.query.mongodb]] types in the context of typed
- * criteria for fitness of purpose * and serves as an exemplar of their use.
+ * criteria for fitness of purpose and serves as an exemplar of their use.
  */
 final class TypedCriteriaSpec ()
     extends AnyWordSpec
@@ -43,7 +43,7 @@ final class TypedCriteriaSpec ()
         .build ()
 
 
-    "The MongoDB type criteria support" must {
+    "The MongoDB typed criteria support" must {
         "support complex logical expressions" in {
             val expression : BsonDocument = where[MyDocument] {
                 doc =>

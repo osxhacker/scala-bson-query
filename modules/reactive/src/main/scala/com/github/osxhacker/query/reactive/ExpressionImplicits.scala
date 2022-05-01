@@ -1,5 +1,7 @@
 package com.github.osxhacker.query.reactive
 
+import scala.language.implicitConversions
+
 import com.github.osxhacker.query.criteria.expression.Expression
 import reactivemongo.api.bson.BSONDocument
 

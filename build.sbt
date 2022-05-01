@@ -1,5 +1,5 @@
 //////////////////////////////
-// Manifest Constants
+/// Manifest Constants
 //////////////////////////////
 
 val scala212 = "2.12.15"
@@ -13,7 +13,7 @@ val supportedScalaVersions =
 
 
 //////////////////////////////
-// Global Project Settings
+/// Global Project Settings
 //////////////////////////////
 
 ThisBuild / organization := "com.github.osxhacker"
@@ -22,14 +22,14 @@ ThisBuild / crossScalaVersions := supportedScalaVersions
 
 
 //////////////////////////////
-// Command Aliases
+/// Command Aliases
 //////////////////////////////
 
 addCommandAlias("recompile", "; clean ; compile")
 
 
 //////////////////////////////
-// Project Definitions
+/// Project Definitions
 //////////////////////////////
 
 lazy val root = (project in file ("."))
@@ -45,6 +45,10 @@ lazy val core = module ("core")
 		libraryDependencies ++= Seq (
 			)
 		)
+
+/// This is a work-in-progress, so is not part of the build yet.
+lazy val docs = (project in file ("docs"))
+	.enablePlugins (SbtPlugin, ParadoxSitePlugin /*, GhpagesPlugin */)
 
 lazy val mongo = module ("mongo")
 	.settings (
@@ -99,6 +103,7 @@ def module (name : String, location : File) : Project =
 				} ::: List (
 					"com.chuusai" %% "shapeless" % "2.3.8",
 					"org.typelevel" %% "cats-core" % "2.7.0",
+					"org.typelevel" %% "mouse" % "1.0.10",
 					"org.scalatest" %% "scalatest" % "3.2.11" % "test"
 					),
 

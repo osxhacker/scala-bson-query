@@ -189,7 +189,7 @@ final class EvaluationOps[T >: String] (private val self : Field[T])
     def =~[DocumentT <: AnyRef, A] (re : (A, RegexModifier))
         (
             implicit
-            witness: SupportedTypesWitness[A],
+            witness : SupportedTypesWitness[A],
             writer : DocumentWriter[RegularExpression[DocumentT, T], DocumentT],
             negationWriter : DocumentWriter[Not[DocumentT], DocumentT]
         )
