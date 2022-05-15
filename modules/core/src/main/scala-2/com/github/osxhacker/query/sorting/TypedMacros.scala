@@ -1,9 +1,8 @@
 package com.github.osxhacker.query.sorting
 
-import com.github.osxhacker.query.model.SortFieldAccess
-
-import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
+
+import com.github.osxhacker.query.model.SortFieldAccess
 
 
 /**

@@ -141,10 +141,10 @@ object Operator
     }
 
 
-    case object ElementMatches
+    case object ElementMatch
         extends Operator
     {
-        override val name = "$elemMatches"
+        override val name = "$elemMatch"
     }
 
 

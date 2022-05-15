@@ -10,7 +10,7 @@ package com.github.osxhacker.query.sorting
  *     import com.github.osxhacker.query.sorting
  *     import untyped._
  *
- *     val sortOrder = by (_.first ^ :: _.second v :: HNil)
+ *     val sortOrder = by (_.first.asc, _.second.desc)
  * }}}
  *
  * And have the be the equivalent of:

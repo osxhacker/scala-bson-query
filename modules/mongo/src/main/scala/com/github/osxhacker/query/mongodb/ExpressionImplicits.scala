@@ -1,5 +1,7 @@
 package com.github.osxhacker.query.mongodb
 
+import scala.language.implicitConversions
+
 import com.github.osxhacker.query.criteria.expression.Expression
 import org.mongodb.scala.bson.BsonDocument
 

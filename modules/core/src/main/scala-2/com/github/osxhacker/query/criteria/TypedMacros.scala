@@ -1,6 +1,5 @@
 package com.github.osxhacker.query.criteria
 
-import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 
 import com.github.osxhacker.query.model.FieldAccess
