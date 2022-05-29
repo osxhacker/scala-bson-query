@@ -10,7 +10,7 @@ import shapeless.{
 
 /**
  * The '''UntypedFunctionsSpec''' type defines the unit-tests which certify the
- * [[com.github.osxhacker.query.sorting.typed]] logic for fitness of purpose
+ * [[com.github.osxhacker.query.sorting.untyped]] logic for fitness of purpose
  * and serves as an exemplar of their use.
  */
 final class UntypedFunctionsSpec ()

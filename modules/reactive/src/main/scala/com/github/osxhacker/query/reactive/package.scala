@@ -2,6 +2,7 @@ package com.github.osxhacker.query
 
 import com.github.osxhacker.query.{
     criteria => CoreCriteria,
+    projection => CoreProjection,
     sorting => CoreSorting
     }
 
@@ -23,9 +24,11 @@ package object reactive
                 with CoreCriteria.expression.LogicalSyntax
                 with CoreSorting.expression.SortingSyntax
                 with CoreCriteria.TypedFunctions
+                with CoreProjection.TypedFunctions
                 with CoreSorting.TypedFunctions
                 with CriteriaWriterImplicits
                 with ExpressionImplicits
+                with ProjectionImplicits
                 with SortingImplicits
 
 
@@ -38,6 +41,11 @@ package object reactive
                 with CoreCriteria.TypedFunctions
                 with CriteriaWriterImplicits
                 with ExpressionImplicits
+
+
+        object projection
+            extends CoreProjection.TypedFunctions
+                with ProjectionImplicits
 
 
         object sorting
@@ -57,9 +65,11 @@ package object reactive
                 with CoreCriteria.expression.LogicalSyntax
                 with CoreSorting.expression.SortingSyntax
                 with CoreCriteria.UntypedFunctions
+                with CoreProjection.UntypedFunctions
                 with CoreSorting.UntypedFunctions
                 with CriteriaWriterImplicits
                 with ExpressionImplicits
+                with ProjectionImplicits
                 with SortingImplicits
 
 
@@ -72,6 +82,11 @@ package object reactive
                 with CoreCriteria.UntypedFunctions
                 with CriteriaWriterImplicits
                 with ExpressionImplicits
+
+
+        object projection
+            extends CoreProjection.UntypedFunctions
+                with ProjectionImplicits
 
 
         object sorting

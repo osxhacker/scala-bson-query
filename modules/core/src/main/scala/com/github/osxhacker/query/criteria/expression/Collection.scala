@@ -1,6 +1,7 @@
 package com.github.osxhacker.query.criteria.expression
 
 import scala.language.implicitConversions
+
 import cats.data.Chain
 import com.github.osxhacker.query.DocumentWriter
 import com.github.osxhacker.query.criteria.Field

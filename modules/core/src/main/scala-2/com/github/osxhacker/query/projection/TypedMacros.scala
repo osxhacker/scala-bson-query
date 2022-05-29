@@ -2,6 +2,8 @@ package com.github.osxhacker.query.projection
 
 import scala.reflect.macros.blackbox
 
+import com.github.osxhacker.query.model.ProjectFieldAccess
+
 
 /**
  * The '''TypedMacros''' `object` defines the
@@ -11,6 +13,26 @@ import scala.reflect.macros.blackbox
  */
 object TypedMacros
 {
+    def createProjectField[T : c.WeakTypeTag, U : c.WeakTypeTag] (
+        c : blackbox.Context { type PrefixType = ProjectFieldAccess[T] }
+    )
+        (statement : c.Tree)
+    : c.Tree =
+    {
+        import c.universe._
+
+        val q"""(..${ _ }) => $select""" = statement
+        val selectors = select.collect {
+            case Select (_, TermName (property)) =>
+                property
+        }.reverse.mkString (".")
+
+        val propertyType = weakTypeOf[U]
+
+        q"""new _root_.com.github.osxhacker.query.projection.ProjectField[$propertyType] ($selectors)"""
+    }
+
+
     def deriveProjection[T <: Product : c.WeakTypeTag] (
         c : blackbox.Context { type PrefixType = ProjectionSpecification[T] }
         )
@@ -52,7 +74,7 @@ object TypedMacros
 
                     List(
                         q"""
-                        new _root_.com.github.osxhacker.query.criteria.Field[Any] (
+                        new _root_.com.github.osxhacker.query.projection.ProjectField[Any] (
                            ${ Literal (Constant (fullPath)) }
                            )
                        """)
@@ -72,7 +94,7 @@ object TypedMacros
 
                     List(
                         q"""
-                        new _root_.com.github.osxhacker.query.criteria.Field[Any] (
+                        new _root_.com.github.osxhacker.query.projection.ProjectField[Any] (
                            ${ Literal (Constant (fullPath)) }
                            )
                        """)

@@ -28,14 +28,6 @@ final class UntypedSortingSpec ()
     import untyped.sorting._
 
 
-    /// Class Types
-    final case class DocumentToSort (
-        val firstName : String,
-        val lastName : String,
-        val age : Int
-        )
-
-
     /// Instance Properties
     private val settings = JsonWriterSettings.builder ()
         .outputMode (JsonMode.RELAXED)
@@ -43,7 +35,7 @@ final class UntypedSortingSpec ()
         .build ()
 
 
-    "The MongoDB typed sorting support" must {
+    "The MongoDB untyped sorting support" must {
         "be able to produce a valid sort document with an HList" in {
             val specification : BsonDocument = byEach {
                 doc =>

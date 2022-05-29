@@ -16,7 +16,7 @@ import shapeless.{
 
 
 /**
- * The '''TypedSortingSpec ''' type defines the unit-tests which certify the
+ * The '''TypedSortingSpec''' type defines the unit-tests which certify the
  * [[com.github.osxhacker.query.mongodb]] types in the context of typed
  * sorting for fitness of purpose and serves as an exemplar of their use.
  */

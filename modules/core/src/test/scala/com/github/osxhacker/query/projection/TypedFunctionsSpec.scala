@@ -1,7 +1,6 @@
 package com.github.osxhacker.query.projection
 
 import com.github.osxhacker.query.ProjectSpec
-import com.github.osxhacker.query.criteria.Field
 import org.scalatest.diagrams.Diagrams
 
 import shapeless.{
@@ -41,11 +40,11 @@ final class TypedFunctionsSpec ()
             val specification = into[SampleDocument] ()
 
             specification shouldBe ProjectionSpecification[SampleDocument] (
-                Field[String] ("name") ::
-                Field[Int] ("age") ::
-                Field[String] ("address.street") ::
-                Field[String] ("address.city") ::
-                Field[String] ("address.state") ::
+                ProjectField[String] ("name") ::
+                ProjectField[Int] ("age") ::
+                ProjectField[String] ("address.street") ::
+                ProjectField[String] ("address.city") ::
+                ProjectField[String] ("address.state") ::
                 HNil
                 )
             }
@@ -54,31 +53,32 @@ final class TypedFunctionsSpec ()
             val specification = into[LimitedResults] ()
 
             specification shouldBe ProjectionSpecification[LimitedResults] (
-                Field[String] ("name") ::
-                Field[Int] ("age") ::
+                ProjectField[String] ("name") ::
+                ProjectField[Int] ("age") ::
                 HNil
                 )
             }
-
-        "require all fields in the desired type exist in the document" in {
-            final case class AddedField (val foo : Int)
-
-
-            assertDoesNotCompile("""
-                into[SampleDocument, AddedField] ()
-                """)
-        }
 
         "be able to identify collection-like properties" in {
             val specification = into[Outer] ()
 
             specification shouldBe ProjectionSpecification[Outer] (
-                Field[String] ("name") ::
-                Field[Int] ("inners.a") ::
-                Field[Int] ("inners.b") ::
-                Field[Int] ("inners.c") ::
+                ProjectField[String] ("name") ::
+                ProjectField[Int] ("inners.a") ::
+                ProjectField[Int] ("inners.b") ::
+                ProjectField[Int] ("inners.c") ::
                 HNil
-            )
-        }
+                )
+            }
+
+        "require a Product type to project into" in {
+            final class NotAProduct(val a : String, b : Int)
+
+            assertDoesNotCompile(
+                """
+                  |into[NotAProduct] ()
+                  |""".stripMargin
+                )
+            }
     }
 }

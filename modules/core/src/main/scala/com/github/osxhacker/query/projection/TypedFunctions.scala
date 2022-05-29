@@ -1,5 +1,7 @@
 package com.github.osxhacker.query.projection
 
+import scala.language.experimental.macros
+
 
 /**
  * The '''TypedFunctions''' type provides the ability to ''lift'' arbitrary
@@ -22,12 +24,12 @@ trait TypedFunctions
      *     val specification = into[Outer] ()
      *
      *     /// Is the same as
-     *     val explicitly = returning[Outer] {
+     *     val explicitly = untyped.returning {
      *         available =>
-     *             available (_.name) ::
-     *             available (_.inners).each (_.a) ::
-     *             available (_.inners).each (_.b) ::
-     *             available (_.inners).each (_.c) ::
+     *             available.name ::
+     *             available.inners.a ::
+     *             available.inners.b ::
+     *             available.inners.c ::
      *             HNil
      *     }
      * }}}
@@ -37,7 +39,6 @@ trait TypedFunctions
      *
      * Use `returning` for more general cases.
      */
-    def into[T <: Product]
-    : ProjectionSpecification.PartiallyConstructed[T] =
-        ProjectionSpecification[T]
+    def into[T <: Product] () : ProjectionSpecification[T] =
+        macro TypedMacros.deriveProjection[T]
 }
