@@ -49,9 +49,14 @@ lazy val core = module ("core")
 /// This is a work-in-progress, so is not part of the build yet.
 lazy val docs = (project in file ("docs"))
 	.settings (
+		git.remoteRepo := "git@github.com:osxhacker/scala-bson-query.git",
+		makeSite / mappings ++= Seq (
+			file ("LICENSE") -> "LICENSE"
+			),
+
 		paradoxProperties += ("version" -> version.value)
 		)
-	.enablePlugins (ParadoxSitePlugin /*, GhpagesPlugin */)
+	.enablePlugins (ParadoxSitePlugin, GhpagesPlugin)
 
 lazy val mongo = module ("mongo")
 	.settings (

@@ -1,11 +1,11 @@
 ## Projection
 
-The official MongoDB Scala driver supports sorting using the [Projections](https://mongodb.github.io/mongo-java-driver/4.5/apidocs/mongodb-driver-core/com/mongodb/client/model/Projections.html) helper.  One can still use that approach if desired.
+The official MongoDB Scala driver supports projection using the [Projections](https://mongodb.github.io/mongo-java-driver/4.5/apidocs/mongodb-driver-core/com/mongodb/client/model/Projections.html) helper.  One can still use that approach if desired.
 
 However, `scala-bson-query` defines `projection` support which allows:
 
 ```scala
-  // Using untyped.sorting
+  // Using untyped.projection
   {
   import com.github.osxhacker.query.mongodb.untyped.projection._
   import shapeless._
@@ -38,7 +38,6 @@ However, `scala-bson-query` defines `projection` support which allows:
 For the purposes of the method API reference, assume the following code is in scope:
 
 ```scala
-import com.github.osxhacker.query.model
 import com.github.osxhacker.query.projection.typed._
 ```
 
