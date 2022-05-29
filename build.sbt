@@ -49,7 +49,7 @@ lazy val core = module ("core")
 /// This is a work-in-progress, so is not part of the build yet.
 lazy val docs = (project in file ("docs"))
 	.settings (
-		git.remoteRepo := "git@github.com:osxhacker/scala-bson-query.git",
+		git.remoteRepo := "https://github.com/osxhacker/scala-bson-query",
 		makeSite / mappings ++= Seq (
 			file ("LICENSE") -> "LICENSE"
 			),
