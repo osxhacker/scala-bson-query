@@ -2,7 +2,7 @@
 See: https://developer.lightbend.com/docs/paradox/current/
 -->
 
-@@include[README](../../../README.md)
+@@include[README](../../../../README.md)
 
 @@@ index
 

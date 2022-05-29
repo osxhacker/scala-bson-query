@@ -35,20 +35,9 @@ addCommandAlias("recompile", "; clean ; compile")
 lazy val root = (project in file ("."))
 	.settings (
 		crossScalaVersions := Nil,
-		publish / skip := true,
-
-		git.remoteRepo := "git@github.com:osxhacker/scala-bson-query.git",
-		makeSite / mappings ++= Seq (
-			file ("LICENSE") -> "LICENSE"
-			),
-
-		paradoxProperties += ("version" -> version.value),
-		paradoxTheme := Some (builtinParadoxTheme ("generic")),
-		previewPath := "target/paradox/site/main/index.html",
-		siteSourceDirectory := target.value / "paradox" / "site" / "main"
+		publish / skip := true
 		)
-	.aggregate (core, mongo, reactive)
-	.enablePlugins (SiteScaladocPlugin, ParadoxSitePlugin, GhpagesPlugin)
+	.aggregate (core, mongo, reactive, docs)
 
 
 lazy val core = module ("core")
@@ -56,6 +45,19 @@ lazy val core = module ("core")
 		libraryDependencies ++= Seq (
 			)
 		)
+
+lazy val docs = (project in file ("docs"))
+	.enablePlugins (SiteScaladocPlugin, ParadoxSitePlugin, GhpagesPlugin)
+	.settings (
+		git.remoteRepo := "git@github.com:osxhacker/scala-bson-query.git",
+		makeSite / mappings ++= Seq (
+			file ("LICENSE") -> "LICENSE"
+			),
+
+		paradoxProperties += ("version" -> version.value),
+		paradoxTheme := Some (builtinParadoxTheme ("generic"))
+		)
+
 
 lazy val mongo = module ("mongo")
 	.settings (
