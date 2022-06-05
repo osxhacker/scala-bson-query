@@ -1,3 +1,5 @@
+import com.typesafe.sbt.SbtGit.GitKeys._
+
 //////////////////////////////
 /// Manifest Constants
 //////////////////////////////
@@ -19,6 +21,7 @@ val supportedScalaVersions =
 ThisBuild / organization := "com.github.osxhacker"
 ThisBuild / scalaVersion := scala213
 ThisBuild / crossScalaVersions := supportedScalaVersions
+ThisBuild / autoAPIMappings := true
 
 
 //////////////////////////////
@@ -35,21 +38,15 @@ addCommandAlias("recompile", "; clean ; compile")
 lazy val root = (project in file ("."))
 	.settings (
 		crossScalaVersions := Nil,
-		publish / skip := true
-		)
-	.aggregate (core, mongo, reactive, docs)
+		name := "scala-bson-query",
+		ScalaUnidoc / siteSubdirName := "latest/api",
+		addMappingsToSiteDir(
+			ScalaUnidoc / packageDoc / mappings,
+			ScalaUnidoc / siteSubdirName
+			),
 
-
-lazy val core = module ("core")
-	.settings (
-		libraryDependencies ++= Seq (
-			)
-		)
-
-lazy val docs = (project in file ("docs"))
-	.enablePlugins (SiteScaladocPlugin, ParadoxSitePlugin, GhpagesPlugin)
-	.settings (
 		git.remoteRepo := "git@github.com:osxhacker/scala-bson-query.git",
+		git.useGitDescribe := true,
 		makeSite / mappings ++= Seq (
 			file ("LICENSE") -> "LICENSE"
 			),
@@ -57,6 +54,16 @@ lazy val docs = (project in file ("docs"))
 		paradoxProperties += ("version" -> version.value),
 		paradoxTheme := Some (builtinParadoxTheme ("generic"))
 		)
+	.aggregate (core, mongo, reactive)
+	.enablePlugins(
+		ParadoxSitePlugin,
+		SiteScaladocPlugin,
+		ScalaUnidocPlugin,
+		GhpagesPlugin
+		)
+
+
+lazy val core = module ("core")
 
 
 lazy val mongo = module ("mongo")
