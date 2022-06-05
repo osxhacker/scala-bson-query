@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+<title>Criteria · scala-bson-query</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content='scala-bson-query'/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100normal,100italic,300normal,300italic,400normal,400italic,500normal,500italic,700normal,700italic,900normal,900italicc" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+<script type="text/javascript" src="js/warnOldVersion.js"></script>
+<script type="text/javascript" src="js/groups.js"></script>
+<script type="text/javascript" src="js/snippets.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/foundation/dist/foundation.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/page.css"/>
+
+<!--
+<link rel="shortcut icon" href="images/favicon.ico" />
+-->
+</head>
+
+<body>
+<div class="off-canvas-wrapper">
+<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+<div class="off-canvas position-left" id="off-canvas-menu" data-off-canvas>
+<nav class="off-canvas-nav">
+<div class="nav-home">
+<a href="index.html" >
+<span class="home-icon">⌂</span>scala-bson-query
+</a>
+<div class="version-number">
+0.1.0*
+</div>
+</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="criteria.html" class="active page">Criteria</a></li>
+  <li><a href="sorting.html" class="page">Sorting</a></li>
+  <li><a href="projection.html" class="page">Projection</a></li>
+</ul>
+</div>
+
+</nav>
+</div>
+
+<div class="off-canvas-content" data-off-canvas-content>
+
+<header class="site-header expanded row">
+<div class="small-12 column">
+<a href="#" class="off-canvas-toggle hide-for-medium" data-toggle="off-canvas-menu"><svg class="svg-icon svg-icon-menu" version="1.1" id="Menu" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve"> <path class="svg-icon-menu-path" fill="#53CDEC" d="M16.4,9H3.6C3.048,9,3,9.447,3,10c0,0.553,0.048,1,0.6,1H16.4c0.552,0,0.6-0.447,0.6-1C17,9.447,16.952,9,16.4,9z M16.4,13
+H3.6C3.048,13,3,13.447,3,14c0,0.553,0.048,1,0.6,1H16.4c0.552,0,0.6-0.447,0.6-1C17,13.447,16.952,13,16.4,13z M3.6,7H16.4
+C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.048,7,3.6,7z"/></svg>
+</a>
+<div class="title"><a href="index.html">scala-bson-query</a></div>
+
+<!--
+<a href="https://www.example.com" class="logo show-for-medium">logo</a>
+-->
+</div>
+</header>
+
+<div class="expanded row">
+
+<div class="medium-3 large-2 show-for-medium column">
+<nav class="site-nav">
+<div class="nav-home">
+<a href="index.html" >
+<span class="home-icon">⌂</span>scala-bson-query
+</a>
+<div class="version-number">
+0.1.0*
+</div>
+</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="criteria.html" class="active page">Criteria</a></li>
+  <li><a href="sorting.html" class="page">Sorting</a></li>
+  <li><a href="projection.html" class="page">Projection</a></li>
+</ul>
+</div>
+
+</nav>
+</div>
+
+<div class="small-12 medium-9 large-10 column">
+<section class="site-content">
+
+<span id="version-warning"></span>
+
+<div class="page-header row">
+<div class="medium-12 show-for-medium column">
+<div class="nav-breadcrumbs">
+<ul>
+  <li><a href="index.html">scala-bson-query</a></li>
+  <li>Criteria</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="page-content row">
+<div class="small-12 large-9 column" id="docs">
+<h2><a href="#criteria" name="criteria" class="anchor"><span class="anchor-link"></span></a>Criteria</h2>
+<p>Defines a DSL for creating <a href="http://mongodb.github.io/mongo-java-driver/">MongoDB</a> and <a href="https://github.com/ReactiveMongo/ReactiveMongo">ReactiveMongo</a> criteria for queries.</p>
+<h3><a href="#overview" name="overview" class="anchor"><span class="anchor-link"></span></a>Overview</h3>
+<p>The original version of this library only supported the ReactiveMongo driver. This project supports that and the official MongoDB Scala/Java driver as well.</p>
+<p>There may be additional <code>modules</code> introduced, such as support for <a href="https://circe.github.io/circe/">Circe</a> and <a href="https://github.com/fthomas/refined">Refined</a> in the future.</p>
+<p>Until <code>v1.0.0</code>, the documentation found here should be considered as being in a state of transition.</p>
+<h2><a href="#original-query-syntax" name="original-query-syntax" class="anchor"><span class="anchor-link"></span></a>Original Query Syntax</h2>
+<p>The <code>reactivemongo.api.collections.GenericCollection</code> type provides the <code>find</code> method used to find documents matching a criteria. It is this interaction which the DSL targets. Originally, providing a selector to <code>find</code> had an interaction similar to:</p>
+<pre class="prettyprint"><code class="language-scala">  val cursor = collection.find(BSONDocument(&quot;firstName&quot; -&gt; &quot;Jack&quot;)).cursor[BSONDocument]
+</code></pre>
+<p>This is, of course, still supported as the DSL does not preclude this usage.</p>
+<h2><a href="#dsl" name="dsl" class="anchor"><span class="anchor-link"></span></a>DSL</h2>
+<h3><a href="#untyped-dsl-support" name="untyped-dsl-support" class="anchor"><span class="anchor-link"></span></a>Untyped DSL Support</h3>
+<p>What the DSL <em>does</em> provide is the ablity to formulate queries thusly:</p>
+<pre class="prettyprint"><code class="language-scala">  // Using an untyped.criteria
+  {
+  import com.github.osxhacker.query.mongodb.untyped.criteria._
+
+  // The MongoDB properties referenced are not enforced by the compiler
+  // to belong to any particular type.  This is what is meant by &quot;Untyped&quot;.
+  val adhoc = criteria.firstName === &quot;Jack&quot; &amp;&amp; criteria.age &gt;= 18
+  val matching = collection.find (adhoc).collect ()
+  }
+</code></pre>
+<p>Another form which achieves the same result is to use one of the <code>where</code> methods available:</p>
+<pre class="prettyprint"><code class="language-scala">  // Using one of the untyped.where overloads
+  {
+  import com.github.osxhacker.query.reactive.untyped.criteria._
+
+  val matching = collection.find (
+    where (_.firstName === &quot;Jack&quot; &amp;&amp; _.age &gt;= 18)
+	).collect ()
+  }
+</code></pre>
+<p>There are overloads for between 1 and 22 place holders using the <code>where</code> method. Should more than 22 be needed, then the 1 argument version should be used with a named parameter. This allows an infinite number of property constraints to be specified.</p>
+<h3><a href="#typed-dsl-support" name="typed-dsl-support" class="anchor"><span class="anchor-link"></span></a>Typed DSL Support</h3>
+<p>For situations where the MongoDB document structure is well known and a developer wishes enforce property existence <strong>during compilation</strong>, the <code>typed</code> Criteria can be used:</p>
+<pre class="prettyprint"><code class="language-scala">  {
+  // Using a typed criteria which restricts properties to those
+  // within a given type and/or those directly accessible
+  // through property selectors.
+  import com.github.osxhacker.query.mongo.typed.criteria._
+
+  case class Nested (rating : Double)
+  case class ExampleDocument (aProperty : String, another : Int, nested : Nested)
+
+  val byKnownProperties = where[ExampleDocument] {
+    doc =&gt;
+      doc (_.aProperty) =~ &quot;^[A-Z]\\w+&quot; &amp;&amp; (
+        doc (_.another) &gt; 0 ||
+        doc (_.nested.rating) &lt; 10.0
+	    )
+	  }
+
+  val results = collection.find (byKnownProperties).collect ()
+  }
+</code></pre>
+<p>When the <code>typed</code> version is employed, compilation will fail if the provided property navigation does not exist from the <em>root type</em> (specified as the type parameter to <code>criteria</code> above) <strong>or</strong> the leaf type is not type-compatible with the value(s) provided (if any).</p>
+<p>An easy way to think of this is that if it doesn&rsquo;t compile in &ldquo;regular usage&rdquo;, then it definitely will not when used in a <code>typed.criteria</code>.</p>
+<h3><a href="#usage-considerations" name="usage-considerations" class="anchor"><span class="anchor-link"></span></a>Usage Considerations</h3>
+<p>Note that <code>typed</code> and <code>untyped</code> serve different needs. When the structure of a document collection is both known <em>and</em> identified as static, <code>typed</code> makes sense to employ. However, <code>untyped</code> is compelling when document structure can vary within a collection. These are considerations which can easily vary between projects and even within different modules of one project.</p>
+<p>Feel free to use either or both <code>typed</code> and <code>untyped</code> as they make sense for the problem at hand. One thing to keep in mind is that the examples shown above assumes only one is in scope.</p>
+<h2><a href="#operators" name="operators" class="anchor"><span class="anchor-link"></span></a>Operators</h2>
+<p>When using the Criteria DSL, the fact that the operators adhere to the expectations of both programmers and Scala precedences, most uses will &ldquo;just work.&rdquo; For example, explicitly defining grouping is done with parentheses, just as you would do with any other bit of Scala code.</p>
+<p>For the purposes of the operator API reference, assume the following code is in scope:</p>
+<pre class="prettyprint"><code class="language-scala">import com.github.osxhacker.query.reactive.untyped.criteria._
+</code></pre>
+<h3><a href="#comparison-operators" name="comparison-operators" class="anchor"><span class="anchor-link"></span></a>Comparison Operators</h3>
+<p>With the majority of comparison operators, keep in mind that the definition of their ordering is dependent on the type involved. For example, strings will use lexigraphical ordering whereas numbers use natural ordering.</p>
+<ul>
+  <li><strong>===</strong>, <strong>@==</strong> Matches properties based on value equality.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty === &quot;value&quot;
+</code></pre>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty @== &quot;value&quot;
+</code></pre>
+<ul>
+  <li><strong>&lt;&gt;</strong>, <strong>=/=</strong>, <strong>!==</strong> Matches properties which do not have the given value.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty &lt;&gt; &quot;value&quot;
+</code></pre>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty =/= &quot;value&quot;
+</code></pre>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty !== &quot;value&quot;
+</code></pre>
+<ul>
+  <li><strong>&lt;</strong> Matches properties which compare &ldquo;less than&rdquo; a given value.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aNumber &lt; 99
+</code></pre>
+<ul>
+  <li><strong>&lt;=</strong> Matches properties which compare &ldquo;less than or equal to&rdquo; a given value.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aNumber &lt;= 99
+</code></pre>
+<ul>
+  <li><strong>&gt;</strong> Matches properties which compare &ldquo;greater than&rdquo; a given value.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty &gt; &quot;Alice&quot;
+</code></pre>
+<ul>
+  <li><strong>&gt;=</strong> Matches properties which compare &ldquo;greater than or equal to&rdquo; a given value.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aNumber &gt;= 100
+</code></pre>
+<ul>
+  <li><strong>between</strong> Shorthand for specifying a range of values. The <code>BetweenPolicy</code> determines how the boundary values are considered.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aString.between[HalfOpen] (&quot;A&quot;, &quot;B&quot;)
+</code></pre>
+<h3><a href="#existence-operators" name="existence-operators" class="anchor"><span class="anchor-link"></span></a>Existence Operators</h3>
+<ul>
+  <li><strong>exists</strong> Matches any document which has the specified field. Use the unary not operator to match based on the leaf property being absent entirely.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty.exists	// Requires &#39;aProperty&#39; to be in the document
+!criteria.aProperty.exists	// Only matches documents without &#39;aProperty&#39;
+</code></pre>
+<ul>
+  <li><strong>in</strong> Matches properties which equal one of the given values or array properties having one element which equals any of the given values. Combine with the unary not operator to specify &ldquo;not in.&rdquo;</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.ranking.in (1, 2, 3, 4, 5)
+!criteria.ranking.in (1, 2, 3, 4, 5)
+</code></pre>
+<ul>
+  <li><strong>all</strong> Matches array properties which contain all of the given values.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.strings.all (&quot;hello&quot;, &quot;world&quot;)
+</code></pre>
+<h3><a href="#string-operators" name="string-operators" class="anchor"><span class="anchor-link"></span></a>String Operators</h3>
+<ul>
+  <li><strong>=~</strong> Matches a string property which satisfies the given regular expression <code>String</code>, optionally with <a href="https://docs.mongodb.com/manual/reference/operator/query/regex/">regex flags</a>.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty =~ &quot;&quot;&quot;^(value)|(someting\s+else)&quot;&quot;&quot;
+criteria.aProperty =~ &quot;&quot;&quot;^(value)|(someting\s+else)&quot;&quot;&quot; -&gt; IgnoreCase
+</code></pre>
+<ul>
+  <li><strong>!~</strong> Matches a string property which does <em>not</em> satisfy the given regular expression <code>String</code>, optionally with <a href="https://docs.mongodb.com/manual/reference/operator/query/regex/">regex flags</a>.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty !~ &quot;&quot;&quot;\d+&quot;&quot;&quot;
+criteria.aProperty !~ &quot;&quot;&quot;foo.*bar&quot;&quot;&quot; -&gt; (IgnoreCase | MultilineMatching)
+</code></pre>
+<h3><a href="#logical-operators" name="logical-operators" class="anchor"><span class="anchor-link"></span></a>Logical Operators</h3>
+<ul>
+  <li><strong>!</strong> The unary not operator provides logical negation of an <code>Expression</code>.</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">!(criteria.aProperty === &quot;value&quot;)
+</code></pre>
+<ul>
+  <li><strong>&amp;&amp;</strong> Defines logical conjunction (&lsquo;&lsquo;AND&rsquo;&rsquo;).</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty === &quot;value&quot; &amp;&amp; criteria.another &gt; 0
+</code></pre>
+<ul>
+  <li><strong>!&amp;&amp;</strong> Defines negation of conjunction (&lsquo;&lsquo;NOR&rsquo;&rsquo;).</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty === &quot;value&quot; !&amp;&amp; criteria.aProperty @== &quot;other value&quot;
+</code></pre>
+<ul>
+  <li><strong>||</strong> Defines logical disjunction (&lsquo;&lsquo;OR&rsquo;&rsquo;).</li>
+</ul>
+<pre class="prettyprint"><code class="language-scala">criteria.aProperty === &quot;value&quot; || criteria.aProperty === &quot;other value&quot;
+</code></pre>
+<div class="source-github">
+The source code for this page can be found <a href="https://github.com/osxhacker/scala-bson-query/tree/master/src/main/paradox/criteria.md">here</a>.
+</div>
+
+<div class="nav-next">
+<p><strong>Next:</strong> <a href="sorting.html">Sorting</a></p>
+</div>
+</div>
+<div class="large-3 show-for-large column" data-sticky-container>
+<nav class="sidebar sticky" data-sticky data-anchor="docs" data-sticky-on="large">
+<div class="page-nav">
+<div class="nav-title">On this page:</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="criteria.html#criteria" class="header">Criteria</a>
+  <ul>
+    <li><a href="criteria.html#overview" class="header">Overview</a></li>
+    <li><a href="criteria.html#original-query-syntax" class="header">Original Query Syntax</a></li>
+    <li><a href="criteria.html#dsl" class="header">DSL</a></li>
+    <li><a href="criteria.html#operators" class="header">Operators</a></li>
+  </ul></li>
+</ul>
+</div>
+</div>
+</nav>
+</div>
+</div>
+
+</section>
+</div>
+
+</div>
+
+<footer class="site-footer">
+
+<section class="site-footer-nav">
+<div class="expanded row">
+<div class="small-12 large-offset-2 large-10 column">
+<div class="row site-footer-content">
+
+<div class="small-12 medium-4 large-3 text-center column">
+<div class="nav-links">
+<ul>
+<!-- <li><a href="https://www.example.com/products/">Products</a> -->
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+<section class="site-footer-base">
+<div class="expanded row">
+<div class="small-12 large-offset-2 large-10 column">
+<div class="row site-footer-content">
+
+<div class="small-12 text-center large-9 column">
+
+<!--
+<div class="copyright">
+<span class="text">&copy; 2022</span>
+<a href="https://www.example.com" class="logo">logo</a>
+</div>
+-->
+</div>
+
+</div>
+</div>
+</div>
+</section>
+</footer>
+
+</div>
+</div>
+</div>
+</body>
+
+<script type="text/javascript" src="lib/foundation/dist/foundation.min.js"></script>
+<script type="text/javascript">jQuery(document).foundation();</script>
+<script type="text/javascript" src="js/magellan.js"></script>
+
+<style type="text/css">@import "lib/prettify/prettify.css";</style>
+<script type="text/javascript" src="lib/prettify/prettify.js"></script>
+<script type="text/javascript" src="lib/prettify/lang-scala.js"></script>
+<script type="text/javascript">jQuery(function(){window.prettyPrint && prettyPrint()});</script>
+<script type="text/javascript">jQuery(function(jq){initOldVersionWarnings(jq, '0.1.0-SNAPSHOT', '')});</script>
+
+
+</html>

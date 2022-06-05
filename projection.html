@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+<title>Projection · scala-bson-query</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content='scala-bson-query'/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100normal,100italic,300normal,300italic,400normal,400italic,500normal,500italic,700normal,700italic,900normal,900italicc" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+<script type="text/javascript" src="js/warnOldVersion.js"></script>
+<script type="text/javascript" src="js/groups.js"></script>
+<script type="text/javascript" src="js/snippets.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/foundation/dist/foundation.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/page.css"/>
+
+<!--
+<link rel="shortcut icon" href="images/favicon.ico" />
+-->
+</head>
+
+<body>
+<div class="off-canvas-wrapper">
+<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+<div class="off-canvas position-left" id="off-canvas-menu" data-off-canvas>
+<nav class="off-canvas-nav">
+<div class="nav-home">
+<a href="index.html" >
+<span class="home-icon">⌂</span>scala-bson-query
+</a>
+<div class="version-number">
+0.1.0*
+</div>
+</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="criteria.html" class="page">Criteria</a></li>
+  <li><a href="sorting.html" class="page">Sorting</a></li>
+  <li><a href="projection.html" class="active page">Projection</a></li>
+</ul>
+</div>
+
+</nav>
+</div>
+
+<div class="off-canvas-content" data-off-canvas-content>
+
+<header class="site-header expanded row">
+<div class="small-12 column">
+<a href="#" class="off-canvas-toggle hide-for-medium" data-toggle="off-canvas-menu"><svg class="svg-icon svg-icon-menu" version="1.1" id="Menu" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve"> <path class="svg-icon-menu-path" fill="#53CDEC" d="M16.4,9H3.6C3.048,9,3,9.447,3,10c0,0.553,0.048,1,0.6,1H16.4c0.552,0,0.6-0.447,0.6-1C17,9.447,16.952,9,16.4,9z M16.4,13
+H3.6C3.048,13,3,13.447,3,14c0,0.553,0.048,1,0.6,1H16.4c0.552,0,0.6-0.447,0.6-1C17,13.447,16.952,13,16.4,13z M3.6,7H16.4
+C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.048,7,3.6,7z"/></svg>
+</a>
+<div class="title"><a href="index.html">scala-bson-query</a></div>
+
+<!--
+<a href="https://www.example.com" class="logo show-for-medium">logo</a>
+-->
+</div>
+</header>
+
+<div class="expanded row">
+
+<div class="medium-3 large-2 show-for-medium column">
+<nav class="site-nav">
+<div class="nav-home">
+<a href="index.html" >
+<span class="home-icon">⌂</span>scala-bson-query
+</a>
+<div class="version-number">
+0.1.0*
+</div>
+</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="criteria.html" class="page">Criteria</a></li>
+  <li><a href="sorting.html" class="page">Sorting</a></li>
+  <li><a href="projection.html" class="active page">Projection</a></li>
+</ul>
+</div>
+
+</nav>
+</div>
+
+<div class="small-12 medium-9 large-10 column">
+<section class="site-content">
+
+<span id="version-warning"></span>
+
+<div class="page-header row">
+<div class="medium-12 show-for-medium column">
+<div class="nav-breadcrumbs">
+<ul>
+  <li><a href="index.html">scala-bson-query</a></li>
+  <li>Projection</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="page-content row">
+<div class="small-12 large-9 column" id="docs">
+<h2><a href="#projection" name="projection" class="anchor"><span class="anchor-link"></span></a>Projection</h2>
+<p>The official MongoDB Scala driver supports projection using the <a href="https://mongodb.github.io/mongo-java-driver/4.5/apidocs/mongodb-driver-core/com/mongodb/client/model/Projections.html">Projections</a> helper. One can still use that approach if desired.</p>
+<p>However, <code>scala-bson-query</code> defines <code>projection</code> support which allows:</p>
+<pre class="prettyprint"><code class="language-scala">  // Using untyped.projection
+  {
+  import com.github.osxhacker.query.mongodb.untyped.projection._
+  import shapeless._
+
+  val result = collection.find ().projection (
+    returning {
+        available =&gt;
+          available.a ::
+          availalble.b ::
+          HNil
+      }
+    )
+  }
+
+  // Using typed.projection
+  {
+  import com.github.osxhacker.query.mongodb.typed.projection._
+
+  case class Nested (rating : Double)
+  case class ExampleDocument (aProperty : String, another : Int, nested : Nested)
+
+  val result = collection.find ().projection (into[ExampleDocument] ())
+  }
+</code></pre>
+<h3><a href="#methods" name="methods" class="anchor"><span class="anchor-link"></span></a>Methods</h3>
+<h4><a href="#typed" name="typed" class="anchor"><span class="anchor-link"></span></a>Typed</h4>
+<p>For the purposes of the method API reference, assume the following code is in scope:</p>
+<pre class="prettyprint"><code class="language-scala">import com.github.osxhacker.query.projection.typed._
+</code></pre>
+<ul>
+  <li><strong>into</strong>, a method which inspects the parameterized <code>case class</code> type, producing a projection containing all discoverable properties.</li>
+</ul>
+<h4><a href="#untyped" name="untyped" class="anchor"><span class="anchor-link"></span></a>Untyped</h4>
+<p>For the purposes of the method API reference, assume the following code is in scope:</p>
+<pre class="prettyprint"><code class="language-scala">import com.github.osxhacker.query.projection.untyped._
+</code></pre>
+<ul>
+  <li><strong>returning</strong>, method which allows for the production of an <code>HList</code> having each property to return explicitly specified.</li>
+</ul>
+<div class="source-github">
+The source code for this page can be found <a href="https://github.com/osxhacker/scala-bson-query/tree/master/src/main/paradox/projection.md">here</a>.
+</div>
+
+</div>
+<div class="large-3 show-for-large column" data-sticky-container>
+<nav class="sidebar sticky" data-sticky data-anchor="docs" data-sticky-on="large">
+<div class="page-nav">
+<div class="nav-title">On this page:</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="projection.html#projection" class="header">Projection</a>
+  <ul>
+    <li><a href="projection.html#methods" class="header">Methods</a></li>
+  </ul></li>
+</ul>
+</div>
+</div>
+</nav>
+</div>
+</div>
+
+</section>
+</div>
+
+</div>
+
+<footer class="site-footer">
+
+<section class="site-footer-nav">
+<div class="expanded row">
+<div class="small-12 large-offset-2 large-10 column">
+<div class="row site-footer-content">
+
+<div class="small-12 medium-4 large-3 text-center column">
+<div class="nav-links">
+<ul>
+<!-- <li><a href="https://www.example.com/products/">Products</a> -->
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+<section class="site-footer-base">
+<div class="expanded row">
+<div class="small-12 large-offset-2 large-10 column">
+<div class="row site-footer-content">
+
+<div class="small-12 text-center large-9 column">
+
+<!--
+<div class="copyright">
+<span class="text">&copy; 2022</span>
+<a href="https://www.example.com" class="logo">logo</a>
+</div>
+-->
+</div>
+
+</div>
+</div>
+</div>
+</section>
+</footer>
+
+</div>
+</div>
+</div>
+</body>
+
+<script type="text/javascript" src="lib/foundation/dist/foundation.min.js"></script>
+<script type="text/javascript">jQuery(document).foundation();</script>
+<script type="text/javascript" src="js/magellan.js"></script>
+
+<style type="text/css">@import "lib/prettify/prettify.css";</style>
+<script type="text/javascript" src="lib/prettify/prettify.js"></script>
+<script type="text/javascript" src="lib/prettify/lang-scala.js"></script>
+<script type="text/javascript">jQuery(function(){window.prettyPrint && prettyPrint()});</script>
+<script type="text/javascript">jQuery(function(jq){initOldVersionWarnings(jq, '0.1.0-SNAPSHOT', '')});</script>
+
+
+</html>
