@@ -7,7 +7,7 @@ More detailed information can be found in the [documentation](https://osxhacker.
 
 ## Overview
 
-The original version of this library only supported the ReactiveMongo driver.  This project will support that and the official MongoDB Scala/Java driver as well.
+The original version of this library only supported the ReactiveMongo driver.  This project supports that and the official MongoDB Scala/Java driver as well.
 
 There may be additional `modules` introduced, such as support for [Circe](https://circe.github.io/circe/) and [Refined](https://github.com/fthomas/refined) in the future.
 
@@ -58,7 +58,7 @@ There are overloads for between 1 and 22 place holders using the `where` method.
 
 #### Typed DSL Support
 
-For situations where the MongoDB document structure is well known and a developer wishes enforce property existence **during compilation**, the `typed` Criteria can be used:
+For situations where the MongoDB document structure is well known and a developer wishes to enforce property existence **during compilation**, the `typed` Criteria can be used:
 
 ```scala
   {
@@ -82,7 +82,7 @@ For situations where the MongoDB document structure is well known and a develope
   }
 ```
 
-When the `typed` version is employed, compilation will fail if the provided property navigation does not exist from the *root type* (specified as the type parameter to `criteria` above) **or** the leaf type is not type-compatible with the value(s) provided (if any).
+When the `typed` version of the DSL is employed, compilation will fail if the provided property navigation does not exist from the *root type* (specified as the type parameter to `criteria` above) **or** the leaf type is not type-compatible with the value(s) provided (if any).
 
 An easy way to think of this is that if it doesn't compile in "regular usage", then it definitely will not when used in a `typed.criteria`.
 
