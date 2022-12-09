@@ -20,6 +20,7 @@ ThisBuild / organization := "com.github.osxhacker"
 ThisBuild / scalaVersion := scala213
 ThisBuild / crossScalaVersions := supportedScalaVersions
 ThisBuild / autoAPIMappings := true
+ThisBuild / version := "0.8.2"
 
 
 //////////////////////////////
