@@ -31,7 +31,7 @@ jobs:
         distribution: 'temurin'
         cache: 'sbt'
     - name: Build Paradox documentation
-      run: JAVA_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED" sbt paradox
+      run: sbt paradox
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
