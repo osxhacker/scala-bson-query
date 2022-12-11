@@ -3,7 +3,7 @@
 //////////////////////////////
 
 val scala212 = "2.12.15"
-val scala213 = "2.13.8"
+val scala213 = "2.13.10"
 val scala3 = "3.1.0"
 val supportedScalaVersions =
 	scala213 ::
@@ -20,7 +20,7 @@ ThisBuild / organization := "com.github.osxhacker"
 ThisBuild / scalaVersion := scala213
 ThisBuild / crossScalaVersions := supportedScalaVersions
 ThisBuild / autoAPIMappings := true
-ThisBuild / version := "0.8.2"
+ThisBuild / version := "0.8.3"
 
 
 //////////////////////////////
