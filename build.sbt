@@ -16,11 +16,11 @@ val supportedScalaVersions =
 /// Global Project Settings
 //////////////////////////////
 
-ThisBuild / organization := "com.github.osxhacker"
+ThisBuild / organization := "io.github.osxhacker"
 ThisBuild / scalaVersion := scala213
 ThisBuild / crossScalaVersions := supportedScalaVersions
 ThisBuild / autoAPIMappings := true
-ThisBuild / version := "1.0.0"
+ThisBuild / version := "1.0.1"
 
 
 //////////////////////////////
@@ -80,40 +80,6 @@ lazy val reactive = module ("reactive")
 			)
 		)
 	.dependsOn(core)
-
-
-//////////////////////////////
-// Release Information
-//////////////////////////////
-
-ThisBuild / scmInfo := Some (
-	ScmInfo (
-		url ("https://github.com/osxhacker/scala-bson-query"),
-		"scm:git@github.com:osxhacker/scala-bson-query.git"
-		)
-	)
-
-ThisBuild / description := "DSL for creating MongoDB and ReactiveMongo queries."
-ThisBuild / licenses := List(
-	"Apache 2" -> new URI ("http://www.apache.org/licenses/LICENSE-2.0.txt").toURL ()
-	)
-
-ThisBuild / homepage := Some (
-	url ("https://github.com/osxhacker/scala-bson-query")
-	)
-
-// Remove all additional repository other than Maven Central from POM
-ThisBuild / pomIncludeRepository := { _ => false }
-ThisBuild / publishMavenStyle := true
-
-// New setting for Central Portal.
-ThisBuild / publishTo := {
-	val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
-	if (isSnapshot.value)
-		Some ("central-snapshots" at centralSnapshots)
-	else
-		localStaging.value
-	}
 
 
 def module (name : String) : Project = module (name, file (s"modules/$name"))
