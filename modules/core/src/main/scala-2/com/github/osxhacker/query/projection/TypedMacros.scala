@@ -1,15 +1,15 @@
-package com.github.osxhacker.query.projection
+package io.github.osxhacker.query.projection
 
 import scala.reflect.macros.blackbox
 
-import com.github.osxhacker.query.model.ProjectFieldAccess
+import io.github.osxhacker.query.model.ProjectFieldAccess
 
 
 /**
  * The '''TypedMacros''' `object` defines the
  * [[http://docs.scala-lang.org/overviews/macros/overview.html Scala Macros]]
  * used in supporting type-checked
- * [[com.github.osxhacker.query.projection.ProjectionSpecification]] creation.
+ * [[io.github.osxhacker.query.projection.ProjectionSpecification]] creation.
  */
 object TypedMacros
 {
@@ -29,7 +29,7 @@ object TypedMacros
 
         val propertyType = weakTypeOf[U]
 
-        q"""new _root_.com.github.osxhacker.query.projection.ProjectField[$propertyType] ($selectors)"""
+        q"""new _root_.io.github.osxhacker.query.projection.ProjectField[$propertyType] ($selectors)"""
     }
 
 
@@ -74,7 +74,7 @@ object TypedMacros
 
                     List(
                         q"""
-                        new _root_.com.github.osxhacker.query.projection.ProjectField[Any] (
+                        new _root_.io.github.osxhacker.query.projection.ProjectField[Any] (
                            ${ Literal (Constant (fullPath)) }
                            )
                        """)
@@ -94,7 +94,7 @@ object TypedMacros
 
                     List(
                         q"""
-                        new _root_.com.github.osxhacker.query.projection.ProjectField[Any] (
+                        new _root_.io.github.osxhacker.query.projection.ProjectField[Any] (
                            ${ Literal (Constant (fullPath)) }
                            )
                        """)
@@ -109,7 +109,7 @@ object TypedMacros
             .headOption
 
         q"""
-            new _root_.com.github.osxhacker.query.projection.ProjectionSpecification (
+            new _root_.io.github.osxhacker.query.projection.ProjectionSpecification (
                 Seq (
                    ..${ discover (primaryCtor) }
                     )

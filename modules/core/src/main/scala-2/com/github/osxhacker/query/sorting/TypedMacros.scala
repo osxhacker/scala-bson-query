@@ -1,15 +1,15 @@
-package com.github.osxhacker.query.sorting
+package io.github.osxhacker.query.sorting
 
 import scala.reflect.macros.blackbox
 
-import com.github.osxhacker.query.model.SortFieldAccess
+import io.github.osxhacker.query.model.SortFieldAccess
 
 
 /**
  * The '''TypedMacros''' `object` defines the
  * [[http://docs.scala-lang.org/overviews/macros/overview.html Scala Macros]]
  * used in supporting type-checked
- * [[com.github.osxhacker.query.sorting.SortField]] creation.
+ * [[io.github.osxhacker.query.sorting.SortField]] creation.
  */
 object TypedMacros
 {
@@ -28,6 +28,6 @@ object TypedMacros
 
         val propertyType = weakTypeOf[U]
 
-        q"""new _root_.com.github.osxhacker.query.sorting.PartialSortField[$propertyType] ($selectors)"""
+        q"""new _root_.io.github.osxhacker.query.sorting.PartialSortField[$propertyType] ($selectors)"""
     }
 }

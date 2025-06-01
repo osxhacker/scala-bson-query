@@ -11,8 +11,6 @@ The original version of this library only supported the ReactiveMongo driver.  T
 
 There may be additional `modules` introduced, such as support for [Circe](https://circe.github.io/circe/) and [Refined](https://github.com/fthomas/refined) in the future.
 
-Until `v1.0.0`, the documentation found here should be considered as being in a state of transition.
-
 ### Original Query Syntax
 
 The `reactivemongo.api.collections.GenericCollection` type provides the `find` method used to find documents matching a criteria.  It is this interaction which the DSL targets.  Originally, providing a selector to `find` had an interaction similar to:
@@ -98,9 +96,8 @@ Feel free to use either or both `typed` and `untyped` as they make sense for the
 
 This section details the functionality either currently or planned to be supported by ReactiveMongo-Criteria.
 
-- Update documentation to reflect migration to new project
 - Ability to formulate queries without requiring knowledge of document structure. *COMPLETE*
 - Ability to ''type check'' query constraints by specifying a Scala type. *COMPLETE*
-- Define and add support for an [EDSL](http://scalamacros.org/usecases/advanced-domain-specific-languages.html) specific to sorting. *COMPLETE*
-- Define and add support for an [EDSL](http://scalamacros.org/usecases/advanced-domain-specific-languages.html) specific to projections. *COMPLETE*
+- Define and add support for an [EDSL](https://en.wikipedia.org/wiki/Domain-specific_language#Usage_patterns) specific to sorting. *COMPLETE*
+- Define and add support for an [EDSL](https://en.wikipedia.org/wiki/Domain-specific_language#Usage_patterns) specific to projections. *COMPLETE*
 

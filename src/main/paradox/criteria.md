@@ -29,7 +29,7 @@ What the DSL *does* provide is the ablity to formulate queries thusly:
 ```scala
   // Using an untyped.criteria
   {
-  import com.github.osxhacker.query.mongodb.untyped.criteria._
+  import io.github.osxhacker.query.mongodb.untyped.criteria._
 
   // The MongoDB properties referenced are not enforced by the compiler
   // to belong to any particular type.  This is what is meant by "Untyped".
@@ -43,7 +43,7 @@ Another form which achieves the same result is to use one of the `where` methods
 ```scala
   // Using one of the untyped.where overloads
   {
-  import com.github.osxhacker.query.reactive.untyped.criteria._
+  import io.github.osxhacker.query.reactive.untyped.criteria._
 
   val matching = collection.find (
     where (_.firstName === "Jack" && _.age >= 18)
@@ -62,7 +62,7 @@ For situations where the MongoDB document structure is well known and a develope
   // Using a typed criteria which restricts properties to those
   // within a given type and/or those directly accessible
   // through property selectors.
-  import com.github.osxhacker.query.mongo.typed.criteria._
+  import io.github.osxhacker.query.mongo.typed.criteria._
 
   case class Nested (rating : Double)
   case class ExampleDocument (aProperty : String, another : Int, nested : Nested)
@@ -98,7 +98,7 @@ When using the Criteria DSL, the fact that the operators adhere to the expectati
 For the purposes of the operator API reference, assume the following code is in scope:
 
 ```scala
-import com.github.osxhacker.query.reactive.untyped.criteria._
+import io.github.osxhacker.query.reactive.untyped.criteria._
 ```
 
 ### Comparison Operators

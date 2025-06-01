@@ -2,9 +2,9 @@
 /// Manifest Constants
 //////////////////////////////
 
-val scala212 = "2.12.15"
-val scala213 = "2.13.10"
-val scala3 = "3.1.0"
+val scala212 = "2.12.20"
+val scala213 = "2.13.16"
+val scala3 = "3.3.5"
 val supportedScalaVersions =
 	scala213 ::
 	scala212 ::
@@ -20,7 +20,7 @@ ThisBuild / organization := "com.github.osxhacker"
 ThisBuild / scalaVersion := scala213
 ThisBuild / crossScalaVersions := supportedScalaVersions
 ThisBuild / autoAPIMappings := true
-ThisBuild / version := "0.8.3"
+ThisBuild / version := "1.0.0"
 
 
 //////////////////////////////
@@ -55,7 +55,7 @@ lazy val root = (project in file ("."))
 		)
 	.aggregate (core, mongo, reactive)
 	.enablePlugins(
-		ParadoxSitePlugin,
+		ParadoxPlugin,
 		SiteScaladocPlugin,
 		ScalaUnidocPlugin,
 		GhpagesPlugin
@@ -82,6 +82,39 @@ lazy val reactive = module ("reactive")
 	.dependsOn(core)
 
 
+//////////////////////////////
+// Release Information
+//////////////////////////////
+
+ThisBuild / scmInfo := Some (
+	ScmInfo (
+		url ("https://github.com/osxhacker/scala-bson-query"),
+		"scm:git@github.com:osxhacker/scala-bson-query.git"
+		)
+	)
+
+ThisBuild / description := "DSL for creating MongoDB and ReactiveMongo queries."
+ThisBuild / licenses := List(
+	"Apache 2" -> new URI ("http://www.apache.org/licenses/LICENSE-2.0.txt").toURL ()
+	)
+
+ThisBuild / homepage := Some (
+	url ("https://github.com/osxhacker/scala-bson-query")
+	)
+
+// Remove all additional repository other than Maven Central from POM
+ThisBuild / pomIncludeRepository := { _ => false }
+ThisBuild / publishMavenStyle := true
+
+// New setting for Central Portal.
+ThisBuild / publishTo := {
+	val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+	if (isSnapshot.value)
+		Some ("central-snapshots" at centralSnapshots)
+	else
+		localStaging.value
+	}
+
 
 def module (name : String) : Project = module (name, file (s"modules/$name"))
 
@@ -102,7 +135,7 @@ def module (name : String, location : File) : Project =
 				),
 
 			addCompilerPlugin(
-				"org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full
+				"org.typelevel" % "kind-projector" % "0.13.3" cross CrossVersion.full
 				),
 
 			libraryDependencies ++= {

@@ -7,7 +7,7 @@ However, `scala-bson-query` defines `sorting` support which allows:
 ```scala
   // Using untyped.sorting
   {
-  import com.github.osxhacker.query.mongodb.untyped.sorting._
+  import io.github.osxhacker.query.mongodb.untyped.sorting._
   import shapeless._
 
   val result = collection.sort (by (_.name.ascending)).collect ()
@@ -22,7 +22,7 @@ However, `scala-bson-query` defines `sorting` support which allows:
 
   // Using typed.sorting
   {
-  import com.github.osxhacker.query.mongodb.typed.sorting._
+  import io.github.osxhacker.query.mongodb.typed.sorting._
   import shapeless._
 
   case class Nested (rating : Double)
@@ -46,7 +46,7 @@ However, `scala-bson-query` defines `sorting` support which allows:
 For the purposes of the method API reference, assume the following code is in scope:
 
 ```scala
-import com.github.osxhacker.query.sorting.typed._
+import io.github.osxhacker.query.sorting.typed._
 ```
 
 * **by**, a method which requires a functor that takes a `model.SortFieldAccess` and produces a non-empty `HList` of `SortField` definitions.
@@ -57,7 +57,7 @@ import com.github.osxhacker.query.sorting.typed._
 For the purposes of the method API reference, assume the following code is in scope:
 
 ```scala
-import com.github.osxhacker.query.sorting.untyped._
+import io.github.osxhacker.query.sorting.untyped._
 ```
 
 * **by**, overloaded method accepting between 1 and 4 functions taking `sorting.Untyped` instance(s), each which produce a `SortField` instance.
@@ -69,7 +69,7 @@ import com.github.osxhacker.query.sorting.untyped._
 For the purposes of the operator API reference, assume the following code is in scope:
 
 ```scala
-import com.github.osxhacker.query.reactive.untyped.sorting._
+import io.github.osxhacker.query.reactive.untyped.sorting._
 ```
 
 * **asc**, **ascending** Indicates ascending sort order.
